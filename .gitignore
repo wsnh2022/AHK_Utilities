@@ -1,0 +1,28 @@
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Windows shortcuts
+*.lnk
+
+# AHK compiled executables
+*.exe
+*.bin
+
+# AHK settings/state files
+*.ini
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# Notepad++
+*.bak
+
+# Temp files
+*.tmp
+~$*
