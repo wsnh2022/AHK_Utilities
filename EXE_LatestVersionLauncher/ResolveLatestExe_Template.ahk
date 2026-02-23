@@ -2,7 +2,7 @@
 ; AHK_LatestVersionLauncher — AHK v2 Template
 ; Purpose : Dynamically resolves and runs the highest
 ;           versioned exe matching a given name pattern.
-; Author  : The_Thinker
+; Author  : wsnh2022
 ; Requires: AutoHotkey v2.0+
 ; ============================================
 #SingleInstance Force
@@ -14,7 +14,7 @@
 ; Examples:
 ;   "MyApp*.exe"         → matches MyApp-1.2.0.exe, MyApp 2.0.1-beta.exe
 ;   "PopSearch*.exe"     → matches PopSearch Beta Setup 1.2.0-beta.exe
-APP_DIR     := "C:\path\to\your\app\folder"   ; folder containing versioned exes
+APP_DIR := "C:\path\to\your\app\folder"   ; folder containing versioned exes
 APP_PATTERN := "YourAppName*.exe"             ; wildcard — keep prefix fixed, version floats
 
 ; ── RESOLVE ──────────────────────────────────
@@ -37,16 +37,13 @@ try {
 ; Returns empty string if no match found — caller must handle.
 ResolveLatestExe(dir, pattern) {
     best_path := ""
-    best_ver  := ""
-    Loop Files dir "\" pattern
-    {
+    best_ver := ""
+    loop files dir "\" pattern {
         ; version must follow a space, dash, underscore, or "v" — prevents grabbing digits from app name
-        if RegExMatch(A_LoopFileName, "(?<=[\s\-\_v])(\d[\d.]+)", &m)
-        {
+        if RegExMatch(A_LoopFileName, "(?<=[\s\-\_v])(\d[\d.]+)", &m) {
             ver := RegExReplace(m[], "-.*$", "")               ; strip suffix e.g. -beta, -rc1, -portable
-            if (best_path = "" || CompareVersions(ver, best_ver) > 0)
-            {
-                best_ver  := ver
+            if (best_path = "" || CompareVersions(ver, best_ver) > 0) {
+                best_ver := ver
                 best_path := A_LoopFileFullPath                ; keep highest version found so far
             }
         }
@@ -60,8 +57,7 @@ ResolveLatestExe(dir, pattern) {
 CompareVersions(a, b) {
     a_parts := StrSplit(a, ".")
     b_parts := StrSplit(b, ".")
-    loop Max(a_parts.Length, b_parts.Length)
-    {
+    loop Max(a_parts.Length, b_parts.Length) {
         av := (A_Index <= a_parts.Length) ? Integer(a_parts[A_Index]) : 0   ; missing segment treated as 0
         bv := (A_Index <= b_parts.Length) ? Integer(b_parts[A_Index]) : 0
         if (av > bv)
