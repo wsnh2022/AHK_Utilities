@@ -29,3 +29,7 @@ $RECYCLE.BIN/
 # Temp files
 *.tmp
 ~$*
+
+
+Dynamic-GitSync-Anyrepo.bat
+deploy-log.txt
