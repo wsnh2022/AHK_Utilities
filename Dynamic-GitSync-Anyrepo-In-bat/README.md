@@ -53,7 +53,9 @@ your-repo/
 └── ...
 ```
 
-Add the script and its output files to `.gitignore` so they stay local:
+That is it. No other steps required.
+
+On first run the script automatically checks `.gitignore` for the following entries and appends any that are missing:
 
 ```gitignore
 gitsync.bat
@@ -61,7 +63,7 @@ deploy-log.txt
 .gitsync.lock
 ```
 
-That is it. The script reads the repo name, branch, and remote URL from git itself at runtime.
+Each entry is checked individually. Already present entries are never duplicated. The script reads the repo name, branch, and remote URL from git itself at runtime — nothing is hardcoded.
 
 ---
 
