@@ -32,10 +32,4 @@ $RECYCLE.BIN/
 
 gitsync.bat 
 deploy-log.txt 
-.gitsync.lock 
-gitsync.bat 
-deploy-log.txt 
-.gitsync.lock 
-gitsync.bat 
-deploy-log.txt 
-.gitsync.lock 
+.gitsync.lock
