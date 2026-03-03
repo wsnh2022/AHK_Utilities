@@ -30,6 +30,5 @@ $RECYCLE.BIN/
 *.tmp
 ~$*
 
-
-Dynamic-GitSync-Anyrepo.bat
+gitsync.bat
 deploy-log.txt
