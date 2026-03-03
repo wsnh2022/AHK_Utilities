@@ -105,7 +105,7 @@ Generated from the file list — no input needed:
 | Scenario | Message |
 |---|---|
 | One file changed | `Update index.html` |
-| Multiple files changed | `Update index.html and 3 file(s)` |
+| Multiple files changed | `Update index.html and 3 files` |
 
 ---
 
