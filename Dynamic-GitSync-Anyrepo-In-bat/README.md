@@ -44,14 +44,20 @@ No APIs. No installs. No configuration.
 
 ## Setup
 
-Place the script in the root of any git-tracked folder:
+Place the script anywhere inside a git-tracked folder — repo root or any subfolder:
 
 ```
 your-repo/
-├── gitsync.bat
+├── gitsync.bat              ← works here
+├── tools/
+│   └── gitsync.bat          ← or here
+├── tools/scripts/
+│   └── gitsync.bat          ← or here
 ├── .gitignore
 └── ...
 ```
+
+The script uses `git rev-parse --show-toplevel` to locate the repo root at runtime regardless of where it is placed. All paths — log file, lock file, `.gitignore` — resolve to the repo root, not the script's own directory.
 
 That is it. No other steps required.
 
@@ -87,38 +93,79 @@ cmd /k gitsync.bat
 ## Execution Flow
 
 ```
-START
-  │
-  ├─ Guard: is this a git repo?          No  ──► Exit with error
-  ├─ Guard: does origin remote exist?    No  ──► Exit with error
-  ├─ Acquire .gitsync.lock               Stale lock found? ──► Clear and continue
-  │
-  ├─ Read repo name, branch, remote URL from git state
-  ├─ git fetch origin
-  │
-  ├─ Remote tracking ref exists?
-  │     Yes ──► Count commits ahead / behind
-  │
-  ├─ Remote ahead?
-  │     Yes ──► git pull ──► conflict? ──► Exit with FAILED log entry
-  │
-  ├─ git rm --cached  (untrack newly ignored files)
-  ├─ git add -A
-  │
-  ├─ Nothing staged AND nothing unpushed?
-  │     Yes ──► Exit with SKIPPED log entry
-  │
-  ├─ Nothing staged BUT unpushed commits exist?
-  │     Yes ──► Push only, skip commit step
-  │
-  ├─ Staged changes exist?
-  │     Yes ──► Build commit message from changed file names
-  │             git commit
-  │
-  ├─ git push origin <branch>
-  ├─ Write structured log entry to deploy-log.txt
-  ├─ Delete .gitsync.lock
-  └─ Print result (SUCCESS / FAILED)
+ START
+   │
+   │  [PHASE 1 — GUARDS]
+   │  Verify environment is safe before touching anything
+   │
+   ├─ Is this a git repository?
+   │     No  ──► Print error. Exit.
+   │
+   ├─ Does a remote named 'origin' exist?
+   │     No  ──► Print error. Exit.
+   │
+   ├─ Is .gitsync.lock already present?
+   │     Yes ──► Stale lock from a crashed run. Clear it. Continue.
+   │
+   ├─ Acquire .gitsync.lock  (prevent concurrent runs)
+   ├─ Detect repo name, current branch, remote URL from git state
+   ├─ Auto-update .gitignore with missing entries (gitsync.bat, deploy-log.txt, .gitsync.lock)
+   │
+   │
+   │  [PHASE 2 — FETCH + DIVERGENCE CHECK]
+   │  Get latest remote state without modifying local
+   │
+   ├─ git fetch origin
+   │
+   ├─ Does origin/<branch> tracking ref exist?
+   │     Yes ──► Count how many commits remote is ahead  (REMOTE_AHEAD)
+   │             Count how many commits local is ahead   (LOCAL_AHEAD)
+   │     No  ──► Treat as new branch. Skip divergence counts. Continue.
+   │
+   │
+   │  [PHASE 3 — PULL]
+   │  Sync remote changes to local before staging anything
+   │
+   ├─ Is REMOTE_AHEAD > 0?  (GitHub has commits local does not)
+   │     Yes ──► git pull origin <branch>
+   │               │
+   │               ├─ Pull succeeded? ──► Continue
+   │               └─ Merge conflict? ──► Log FAILED. Print instructions. Exit.
+   │     No  ──► Skip pull. Local is already up to date with remote.
+   │
+   │
+   │  [PHASE 4 — STAGE]
+   │  Clean tracking index, then stage everything
+   │
+   ├─ git rm --cached  (remove files from tracking that now match .gitignore)
+   │                    Local files are NOT deleted from disk
+   ├─ git add -A       (stage all remaining local changes)
+   │
+   │
+   │  [PHASE 5 — COMMIT + PUSH]
+   │  Decide what action is needed based on current state
+   │
+   ├─ Nothing staged AND LOCAL_AHEAD = 0?
+   │     Yes ──► Local and remote are identical. Log SKIPPED. Exit.
+   │
+   ├─ Nothing staged BUT LOCAL_AHEAD > 0?
+   │     Yes ──► Unpushed commits exist. Skip commit. Go to push.
+   │
+   ├─ Staged changes exist?
+   │     Yes ──► Build commit message from changed file names
+   │               1 file  → "Update filename.ext"
+   │               N files → "Update filename.ext and N more files"
+   │             git commit
+   │
+   ├─ git push origin <branch>
+   │
+   │
+   │  [PHASE 6 — LOG + CLEANUP]
+   │  Record result and release lock on every exit path
+   │
+   ├─ Append structured entry to deploy-log.txt
+   ├─ Delete .gitsync.lock
+   └─ Print SUCCESS or FAILED with Actions URL
 ```
 
 ---
