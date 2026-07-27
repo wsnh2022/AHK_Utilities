@@ -1,4 +1,4 @@
-# GitSync
+# Dynamic-GitSync-Anyrepo
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue?logo=windows&logoColor=white)
 ![Shell](https://img.shields.io/badge/shell-Batch%20%28CMD%29-grey?logo=gnubash&logoColor=white)
@@ -44,7 +44,7 @@ No APIs. No installs. No configuration.
 
 ## Setup
 
-Place `gitsync.bat` anywhere inside a git-tracked folder - repo root or any subfolder:
+Place the script anywhere inside a git-tracked folder - repo root or any subfolder:
 
 ```
 your-repo/
@@ -82,7 +82,7 @@ cd C:\path\to\your-repo
 gitsync.bat
 ```
 
-Or to keep the window open when double-clicking:
+Or to keep the window open when double-clicking, use the launcher wrapper:
 
 ```cmd
 cmd /k gitsync.bat
@@ -192,12 +192,12 @@ DATE       : Wed 04/03/2026
 START TIME : 13:04:10.85
 END TIME   : 13:04:18.43
 ELAPSED    : 8 seconds
-REPO       : ahk_public_repo
+REPO       : AHK_Utilities
 BRANCH     : main
 STATUS     : SUCCESS
 COMMIT MSG : Update index.html and 2 more files
 CHANGES    : 3 files changed, 28 insertions(+), 12 deletions(-)
-REMOTE URL : https://github.com/wsnh2022/ahk_public_repo/actions
+REMOTE URL : https://github.com/wsnh2022/AHK_Utilities/actions
 ================================================
 ```
 
