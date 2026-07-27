@@ -1,5 +1,5 @@
 ; ============================================
-; AHK_LatestVersionLauncher — AHK v2 Template
+; AHK_LatestVersionLauncher - AHK v2 Template
 ; Purpose : Dynamically resolves and runs the highest
 ;           versioned exe matching a given name pattern.
 ; Author  : wsnh2022
@@ -15,7 +15,7 @@
 ;   "MyApp*.exe"         → matches MyApp-1.2.0.exe, MyApp 2.0.1-beta.exe
 ;   "PopSearch*.exe"     → matches PopSearch Beta Setup 1.2.0-beta.exe
 APP_DIR := "C:\path\to\your\app\folder"   ; folder containing versioned exes
-APP_PATTERN := "YourAppName*.exe"             ; wildcard — keep prefix fixed, version floats
+APP_PATTERN := "YourAppName*.exe"             ; wildcard - keep prefix fixed, version floats
 
 ; ── RESOLVE ──────────────────────────────────
 APP_EXE := ResolveLatestExe(APP_DIR, APP_PATTERN)
@@ -34,12 +34,12 @@ try {
 
 ; Scans dir for files matching pattern.
 ; Returns full path of the highest versioned match.
-; Returns empty string if no match found — caller must handle.
+; Returns empty string if no match found - caller must handle.
 ResolveLatestExe(dir, pattern) {
     best_path := ""
     best_ver := ""
     loop files dir "\" pattern {
-        ; version must follow a space, dash, underscore, or "v" — prevents grabbing digits from app name
+        ; version must follow a space, dash, underscore, or "v" - prevents grabbing digits from app name
         if RegExMatch(A_LoopFileName, "(?<=[\s\-\_v])(\d[\d.]+)", &m) {
             ver := RegExReplace(m[], "-.*$", "")               ; strip suffix e.g. -beta, -rc1, -portable
             if (best_path = "" || CompareVersions(ver, best_ver) > 0) {

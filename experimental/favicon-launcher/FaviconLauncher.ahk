@@ -22,7 +22,7 @@ IconConfigs := Map(
     ; Second Row - More Examples of Different Action Types
     "youtube", { name: "youtube_icon", url: "https://youtube.com", target: "https://youtube.com/playlist?list=favorites" },
     "reddit", { name: "reddit_icon", url: "https://reddit.com", target: "ahk:C:\Scripts\MyScript.ahk" },
-    "twitter", { name: "twitter_icon", url: "https://twitter.com", target: "file:C:\Users\Documents\important.txt" },
+    "twitter", { name: "twitter_icon", url: "https://twitter.com", target: "file:D:\Library\Documents\important.txt" },
     "linkedin", { name: "linkedin_icon", url: "https://linkedin.com", target: "shell:startup" }
 )
 

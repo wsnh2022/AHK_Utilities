@@ -33,19 +33,19 @@ Every time a new build dropped, I had to manually update the file path in my lau
 | `AppName 1.2.0.exe` | `1.2.0` | supported |
 | `AppName-1.2.0.exe` | `1.2.0` | supported |
 | `AppName_1.2.0.exe` | `1.2.0` | supported |
-| `AppName v1.2.0.exe` | `1.2.0` | supported — `v` treated as separator |
-| `AppName 1.2.0-beta.exe` | `1.2.0` | supported — suffix stripped |
-| `AppName 1.2.0-beta-portable.exe` | `1.2.0` | supported — full suffix stripped |
-| `AppName 1.2.0-rc1.exe` | `1.2.0` | supported — suffix stripped |
-| `AppName 01.30.01.exe` | `1.30.1` | supported — leading zeros normalized |
-| `AppName 1.3.exe` | `1.3` | supported — two-segment version |
-| `AppName 2.0.0.0.exe` | `2.0.0.0` | supported — four-segment version |
-| `AppName 01.30.01-beta-portable.exe` | `1.30.1` | supported — leading zeros and suffix both handled |
-| `AppName2 1.2.0.exe` | `1.2.0` | supported — trailing digit in name, version follows space |
-| `App2Name 1.2.0.exe` | `1.2.0` | supported — mid digit in name, version follows space |
-| `AppName 1.2.0 Setup.exe` | `1.2.0` | supported — trailing text after version ignored |
-| `AppName xx.xx.xx.exe` | arbitrary | supported — any segment count, any digit width |
-| `2AppName 1.2.0.exe` | none | **not supported** — name starts with digit, no valid separator before version |
+| `AppName v1.2.0.exe` | `1.2.0` | supported - `v` treated as separator |
+| `AppName 1.2.0-beta.exe` | `1.2.0` | supported - suffix stripped |
+| `AppName 1.2.0-beta-portable.exe` | `1.2.0` | supported - full suffix stripped |
+| `AppName 1.2.0-rc1.exe` | `1.2.0` | supported - suffix stripped |
+| `AppName 01.30.01.exe` | `1.30.1` | supported - leading zeros normalized |
+| `AppName 1.3.exe` | `1.3` | supported - two-segment version |
+| `AppName 2.0.0.0.exe` | `2.0.0.0` | supported - four-segment version |
+| `AppName 01.30.01-beta-portable.exe` | `1.30.1` | supported - leading zeros and suffix both handled |
+| `AppName2 1.2.0.exe` | `1.2.0` | supported - trailing digit in name, version follows space |
+| `App2Name 1.2.0.exe` | `1.2.0` | supported - mid digit in name, version follows space |
+| `AppName 1.2.0 Setup.exe` | `1.2.0` | supported - trailing text after version ignored |
+| `AppName xx.xx.xx.exe` | arbitrary | supported - any segment count, any digit width |
+| `2AppName 1.2.0.exe` | none | **not supported** - name starts with digit, no valid separator before version |
 
 ---
 
@@ -97,7 +97,7 @@ for script in scripts {
 
 ### `ResolveLatestExe(dir, pattern)`
 
-Scans `dir` for files matching `pattern`. Returns the full path of the highest versioned match. Returns an empty string if no match is found — the caller is responsible for handling that case.
+Scans `dir` for files matching `pattern`. Returns the full path of the highest versioned match. Returns an empty string if no match is found - the caller is responsible for handling that case.
 
 | Parameter | Type | Description |
 |---|---|---|

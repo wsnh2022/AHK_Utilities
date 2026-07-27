@@ -180,7 +180,7 @@ class W32menu {
     static AddSysMenu() {
         this.sys.Add("My computer",  (*) => Run("::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"))
         this.sys.Add("Recycle bin",  (*) => Run("::{645FF040-5081-101B-9F08-00AA002F954E}"))
-        this.sys.Add("Downloads",    (*) => Run("C:\users\" A_UserName "\Downloads"))
+        this.sys.Add("Downloads",    (*) => Run("D:\Library\" A_UserName "\Downloads"))
         this.sys.Add("My documents", (*) => Run(A_MyDocuments))
         this.sys.Add("Open desktop", (*) => Run(A_Desktop))
         this.sys.Add("Show desktop", (*) => ComObject("Shell.Application").ToggleDesktop())

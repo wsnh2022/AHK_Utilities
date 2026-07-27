@@ -1,4 +1,4 @@
-# Dynamic-GitSync-Anyrepo
+# GitSync
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue?logo=windows&logoColor=white)
 ![Shell](https://img.shields.io/badge/shell-Batch%20%28CMD%29-grey?logo=gnubash&logoColor=white)
@@ -44,7 +44,7 @@ No APIs. No installs. No configuration.
 
 ## Setup
 
-Place the script anywhere inside a git-tracked folder — repo root or any subfolder:
+Place `gitsync.bat` anywhere inside a git-tracked folder — repo root or any subfolder:
 
 ```
 your-repo/
@@ -82,7 +82,7 @@ cd C:\path\to\your-repo
 gitsync.bat
 ```
 
-Or to keep the window open when double-clicking, use the launcher wrapper:
+Or to keep the window open when double-clicking:
 
 ```cmd
 cmd /k gitsync.bat
@@ -95,7 +95,7 @@ cmd /k gitsync.bat
 ```
  START
    │
-   │  [PHASE 1 — GUARDS]
+   │  [PHASE 1 - GUARDS]
    │  Verify environment is safe before touching anything
    │
    ├─ Is this a git repository?
@@ -112,7 +112,7 @@ cmd /k gitsync.bat
    ├─ Auto-update .gitignore with missing entries (gitsync.bat, deploy-log.txt, .gitsync.lock)
    │
    │
-   │  [PHASE 2 — FETCH + DIVERGENCE CHECK]
+   │  [PHASE 2 - FETCH + DIVERGENCE CHECK]
    │  Get latest remote state without modifying local
    │
    ├─ git fetch origin
@@ -123,7 +123,7 @@ cmd /k gitsync.bat
    │     No  ──► Treat as new branch. Skip divergence counts. Continue.
    │
    │
-   │  [PHASE 3 — PULL]
+   │  [PHASE 3 - PULL]
    │  Sync remote changes to local before staging anything
    │
    ├─ Is REMOTE_AHEAD > 0?  (GitHub has commits local does not)
@@ -134,7 +134,7 @@ cmd /k gitsync.bat
    │     No  ──► Skip pull. Local is already up to date with remote.
    │
    │
-   │  [PHASE 4 — STAGE]
+   │  [PHASE 4 - STAGE]
    │  Clean tracking index, then stage everything
    │
    ├─ git rm --cached  (remove files from tracking that now match .gitignore)
@@ -142,7 +142,7 @@ cmd /k gitsync.bat
    ├─ git add -A       (stage all remaining local changes)
    │
    │
-   │  [PHASE 5 — COMMIT + PUSH]
+   │  [PHASE 5 - COMMIT + PUSH]
    │  Decide what action is needed based on current state
    │
    ├─ Nothing staged AND LOCAL_AHEAD = 0?
@@ -160,7 +160,7 @@ cmd /k gitsync.bat
    ├─ git push origin <branch>
    │
    │
-   │  [PHASE 6 — LOG + CLEANUP]
+   │  [PHASE 6 - LOG + CLEANUP]
    │  Record result and release lock on every exit path
    │
    ├─ Append structured entry to deploy-log.txt
@@ -192,12 +192,12 @@ DATE       : Wed 04/03/2026
 START TIME : 13:04:10.85
 END TIME   : 13:04:18.43
 ELAPSED    : 8 seconds
-REPO       : AHK_Utilities
+REPO       : ahk_public_repo
 BRANCH     : main
 STATUS     : SUCCESS
 COMMIT MSG : Update index.html and 2 more files
 CHANGES    : 3 files changed, 28 insertions(+), 12 deletions(-)
-REMOTE URL : https://github.com/wsnh2022/AHK_Utilities/actions
+REMOTE URL : https://github.com/wsnh2022/ahk_public_repo/actions
 ================================================
 ```
 
